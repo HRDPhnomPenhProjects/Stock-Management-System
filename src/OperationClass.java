@@ -56,9 +56,9 @@ public class OperationClass extends Thread {
 		for(int i=1;i<=MAXIMUM_RECORD_PER_FILE;i++){
 			lst.add(new Data((current_id++)+"","Name", (float)2.5  ,10,Today.today));		
 		}
-		
-		
+				
 		objectOutputStream.writeObject(lst);
+		
 		objectOutputStream.close();
 		
 		updateRecordHistory(totalRecord,totalRecord);
@@ -126,7 +126,6 @@ public class OperationClass extends Thread {
 		ObjectInputStream objectInputStream = new ObjectInputStream(bufferedOutputStream);
 		datas = (List<Data>) objectInputStream.readObject();
 		objectInputStream.close();
-	 
 		return datas;
 	}
 	 

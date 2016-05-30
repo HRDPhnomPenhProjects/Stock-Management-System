@@ -70,23 +70,24 @@ public class MainClass  {
 	  
 	  	// input = new Scanner(System.in);
 	  	 
-	  	OperationClass.totalRecord =  1000000000l;
+       //OperationClass.totalRecord =  10000000l;
 		
-	  /*	 try {
+	  	 try {
 			OperationClass.totalRecord = OperationClass.getInstance().getRecordHistory().getCurrentRecord();
 		} catch (ClassNotFoundException | IOException e) {
 			System.out.println("You don't have record yet,Please input manually");
 		} catch (Exception e) {
 			System.out.println("You don't have record yet,Please input manually");
-		} */
-		
-		if(OperationClass.totalRecord%OperationClass.numberOfRowPerPage==0){
+		}     
+	 
+	   	 
+	   	 if(OperationClass.totalRecord%OperationClass.numberOfRowPerPage==0){
 			OperationClass.totalPage = (int)OperationClass.totalRecord / OperationClass.numberOfRowPerPage;	
 		}else{
 			OperationClass.totalPage = (int)OperationClass.totalRecord / OperationClass.numberOfRowPerPage ;
 			OperationClass.totalPage++;
 		}
-		 		
+		 
 	 	OperationClass.numberOfFile = 0 ;
 	 	 
 	 	
@@ -102,23 +103,26 @@ public class MainClass  {
 	  	try {
 			System.out.println(OperationClass.getInstance().getRecordHistory().getCurrentRecord());
 		} catch (ClassNotFoundException | IOException e) {
-			System.out.println("You don't have record yet,Please input manually");
+			System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 		} catch (Exception e) {
-			System.out.println("You don't have record yet,Please input manually");
+			System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 		}
-	  	
-	 	try {
+	/*  	
+	 try {
 			mainClass.initializeData();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		} 
+		}   */
+  
+	 	
+	 	
 	 	try {
 			mainClass.readData();
 		} catch (ClassNotFoundException | IOException e) {
-			System.out.println("You don't have record yet,Please input manually");
+			System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 		} catch (Exception e) {
-			System.out.println("You don't have record yet,Please input manually");
+			System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 		}
 	   
 	  	
@@ -129,7 +133,8 @@ public class MainClass  {
 			
 			
 			while (true) {
-		 
+				
+			System.out.println("\n");
 			System.out.print("Option: ");
 		 
 			 
@@ -163,10 +168,10 @@ public class MainClass  {
 	 
 			 
 			 MyConsoleListener.option = "";
-			 
-		 	/*while (input.hasNextLine()) {
+		/*	 
+		 	 while (input.hasNextLine()) {
 		 	System.out.println(input.nextLine());
-			}	 */
+			}	  */
 			  
 			  
 			 input = new Scanner(System.in);
@@ -175,9 +180,10 @@ public class MainClass  {
 				try {
 					mainClass.readData();
 				}catch (ClassNotFoundException | IOException e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
+
 				} catch (Exception e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				}
 				break;
 
@@ -185,10 +191,10 @@ public class MainClass  {
 				try {
 					mainClass.addData();
 				} catch (ClassNotFoundException | IOException e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				} catch (Exception e) {
-					System.out.println("You don't have record yet,Please input manually");
-				}
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
+					}
 			 	 
 				break;
 			case READ:
@@ -200,9 +206,9 @@ public class MainClass  {
 					 
 					mainClass.readData(input.nextLine());
 				} catch (ClassNotFoundException | IOException e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				} catch (Exception e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				}
 			 	break;
 
@@ -213,9 +219,9 @@ public class MainClass  {
 				try {
 					mainClass.update(input.nextLine());
 				} catch (ClassNotFoundException | IOException e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				} catch (Exception e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				}
 				
 				break;
@@ -227,9 +233,9 @@ public class MainClass  {
 				try {
 					mainClass.delete(input.nextLine());
 				}catch (ClassNotFoundException | IOException e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				} catch (Exception e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				}
 			 	break;
 			 	
@@ -238,9 +244,9 @@ public class MainClass  {
 				try {
 					mainClass.goToFirstPage();
 				} catch (ClassNotFoundException | IOException e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				} catch (Exception e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				}
 				break;
 
@@ -249,9 +255,9 @@ public class MainClass  {
 				try {
 					mainClass.goToPreviousPage();
 				}catch (ClassNotFoundException | IOException e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				} catch (Exception e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				}
 				break;
 
@@ -260,9 +266,9 @@ public class MainClass  {
 				try {
 					mainClass.goToNextPage();
 				} catch (ClassNotFoundException | IOException e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				} catch (Exception e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				}
 				
 				break;
@@ -272,9 +278,9 @@ public class MainClass  {
 				try {
 					mainClass.goToLastPage();
 				} catch (ClassNotFoundException | IOException e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				} catch (Exception e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				}
 				
 				break;
@@ -286,9 +292,9 @@ public class MainClass  {
 				try {
 					mainClass.searchByName(input.nextLine());
 				} catch (ClassNotFoundException | IOException e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				} catch (Exception e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				}
 				break;
 			
@@ -299,9 +305,9 @@ public class MainClass  {
 				try {
 					mainClass.goTo(input.nextLine());
 				}catch (ClassNotFoundException | IOException e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				} catch (Exception e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				}
 					
 				break;
@@ -313,9 +319,9 @@ public class MainClass  {
 				try {
 					mainClass.setRow(input.nextLine());
 				} catch (ClassNotFoundException | IOException e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				} catch (Exception e) {
-					System.out.println("You don't have record yet,Please input manually");
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				}
 				break;
 			case BACK_UP:
@@ -406,68 +412,86 @@ public class MainClass  {
 	}
 	
 	void readData() throws ClassNotFoundException, IOException{
-		 result =  new OperationClass(FileNameClass.STOCK_RECORD_PATH + "_1").readAllData();	
+		
+		OperationClass.currentPage = 1;
+		
+		File f = new File(FileNameClass.STOCK_RECORD_DIRECTORY_PATH);
+		
+		
+		
+		 result =  new OperationClass(FileNameClass.STOCK_RECORD_PATH + "_1" /*+ f.listFiles().length*/).readAllData();	
 		 System.out.println("\n\n\n");
 			
 	  	
-		 System.out.println("		 ________________________________________________________________________");	
+		 System.out.println("		 ____________________________________________________________________________________________");	
 		 System.out.print("		");
 		 
-		 System.out.print("||	ID	|");
-		 System.out.print("|	Name	|");
-		 System.out.print("|	Price	|");
-		 System.out.print("|	Quantity	||");
+		 System.out.print("||	ID		|");
+		 System.out.print("|	Name		|");
+		 System.out.print("|	Price	    |");
+		 System.out.print("|	Quantity	    ||");
 		 System.out.println();
-		 System.out.println("		||______________||______________||______________||______________________||");
+		 System.out.println("		||______________________||______________________||__________________||______________________||");
 			
 		 
-		
+		String pattern = "%-20s || %-20s || %-16s || %-21s||";
 	  	 
 	 	for(int i = 0 ; i<OperationClass.numberOfRowPerPage ; i++){
-	 		 System.out.println("\t\t|| "+result.get(i).getId() + "\t\t|| " + result.get(i).getName() + "\t\t|| " + result.get(i).getUnitPrice() + "\t\t|| " + result.get(i).getStockQuantity() +"\t\t\t||" ); 
-	 		 System.out.println("		||______________||______________||______________||______________________||");
+	 		 System.out.format(pattern,"\t\t||\t" + result.get(i).getId() ,result.get(i).getName() , result.get(i).getUnitPrice() , result.get(i).getStockQuantity());
+	 		 System.out.println();
+	 		 System.out.println("		||______________________||______________________||__________________||______________________||");
 	 			 	
 		}
 		 	 System.out.println("\t\t\t Page: " + OperationClass.currentPage +"/"+ OperationClass.totalPage +"\t\t\tTotal Record: "+ OperationClass.getInstance().getRecordHistory().getCurrentRecord() +"\t");
-		 	 System.out.println("		||______________________________________________________________________||");
+		 	 System.out.println("		||__________________________________________________________________________________________||");
 	 	
-	 	 System.out.println(" _____________________________________________________________________________________");
-	 	 System.out.println("| *)Display | W)rite | R)ead | U)pdate | D)elete | F)irst | P)revious | N)ext | L)ast |");
-		 System.out.println("|           S)earch | G)o to | Se)t row | B)ack up | Re)store | H)elp | E)xit         |");
-		 System.out.println("|_____________________________________________________________________________________|");
+	 	 System.out.println("\t\t     _____________________________________________________________________________________");
+	 	 System.out.println("\t\t    | *)Display | W)rite | R)ead | U)pdate | D)elete | F)irst | P)revious | N)ext | L)ast |");
+		 System.out.println("\t\t    |           S)earch | G)o to | Se)t row | B)ack up | Re)store | H)elp | E)xit         |");
+		 System.out.println("\t\t    |_____________________________________________________________________________________|");
 
 	}
 	
+	
+	
 	void readData(List<Data> result) throws ClassNotFoundException, IOException{
+		
+		System.out.println(result.size());
+		
 		System.out.println("\n\n\n");
 	
-		 System.out.println("		 ________________________________________________________________________");	
+		 System.out.println("		 ____________________________________________________________________________________________");	
 		 System.out.print("		");
 		 
-		 System.out.print("||	ID	|");
-		 System.out.print("|	Name	|");
-		 System.out.print("|	Price	|");
-		 System.out.print("|	Quantity	||");
+		 System.out.print("||	ID		|");
+		 System.out.print("|	Name		|");
+		 System.out.print("|	Price	    |");
+		 System.out.print("|	Quantity	    ||");
 		 System.out.println();
-		 System.out.println("		||______________||______________||______________||______________________||");
+		 System.out.println("		||______________________||______________________||__________________||______________________||");
 			
 		 
+		 String pattern = "%-20s || %-20s || %-16s || %-21s||";
+	  	 
+	
 		
 	  	 
 	 	for(int i = 0 ; i<result.size() ; i++){
-	 		 System.out.println("\t\t|| "+result.get(i).getId() + "\t\t|| " + result.get(i).getName() + "\t\t|| " + result.get(i).getUnitPrice() + "\t\t|| " + result.get(i).getStockQuantity() +"\t\t\t||" ); 
-	 		 System.out.println("		||______________||______________||______________||______________________||");
-	 			 	
+	 		 System.out.format(pattern,"\t\t||\t" + result.get(i).getId(),result.get(i).getName() , result.get(i).getUnitPrice() , result.get(i).getStockQuantity());
+	 		 System.out.println();
+	 		 System.out.println("		||______________________||______________________||__________________||______________________||");
+ 			 	
 		}
-		 	 System.out.println("\t\t\t Page: " + OperationClass.currentPage +"/"+ OperationClass.totalPage +"\t\t\tTotal Record: "+ OperationClass.totalRecord +"\t");
-		 	 System.out.println("		||______________________________________________________________________||");
-	 	
+	 	 System.out.println("\t\t\t Page: " + OperationClass.currentPage +"/"+ OperationClass.totalPage +"\t\t\tTotal Record: "+ OperationClass.getInstance().getRecordHistory().getCurrentRecord() +"\t");
+	 	 System.out.println("		||__________________________________________________________________________________________||");
+ 	
+	
 		 
 	 	
-	 	 System.out.println(" _____________________________________________________________________________________");
-	 	 System.out.println("| *)Display | W)rite | R)ead | U)pdate | D)elete | F)irst | P)revious | N)ext | L)ast |");
-		 System.out.println("|           S)earch | G)o to | Se)t row | B)ack up | Re)store | H)elp | E)xit         |");
-		 System.out.println("|_____________________________________________________________________________________|");
+	 	 System.out.println("\t\t     _____________________________________________________________________________________");
+	 	 System.out.println("\t\t    | *)Display | W)rite | R)ead | U)pdate | D)elete | F)irst | P)revious | N)ext | L)ast |");
+		 System.out.println("\t\t    |           S)earch | G)o to | Se)t row | B)ack up | Re)store | H)elp | E)xit         |");
+		 System.out.println("\t\t    |_____________________________________________________________________________________|");
 
 	}
 	
@@ -481,9 +505,12 @@ public class MainClass  {
 				
 				if(OperationClass.getInstance().delete(id)){
 					System.out.println("Delete Succesful...");
+					setRow(OperationClass.numberOfRowPerPage+"");
 				}else{
 					System.out.println("ID Not Found...");
 				}
+				
+				
 				
 				break;
 				
@@ -551,7 +578,7 @@ public class MainClass  {
 	void addData() throws ClassNotFoundException, IOException{
 		
 	 	File f = new File(FileNameClass.STOCK_RECORD_DIRECTORY_PATH);
-  
+	 	 
 	 	List<Data> result =(List<Data>)new OperationClass(FileNameClass.STOCK_RECORD_PATH + "_" +f.listFiles().length).readAllData();
 	 	
 	 	if(result.size() == OperationClass.MAXIMUM_RECORD_PER_FILE){
@@ -572,6 +599,7 @@ public class MainClass  {
 	 		
 	 		result.add(new Data(id, name, (float)unitPrice, (int)quantity, Today.today));
 			new OperationClass(FileNameClass.STOCK_RECORD_PATH + "_" + (f.listFiles().length+1)).addData(result);
+		//	setRow(OperationClass.numberOfRowPerPage+"");
 	 		
 	 	}else{
 	 		String id = OperationClass.getInstance().getRecordHistory().getCurrentRecord()+1 + "";
@@ -591,6 +619,7 @@ public class MainClass  {
 	 		
 	 		result.add(new Data(id, name, (float)unitPrice, (int)quantity, Today.today));
 			new OperationClass(FileNameClass.STOCK_RECORD_PATH + "_" + f.listFiles().length).addData(result);
+			setRow(OperationClass.numberOfRowPerPage+"");
 				
 	 	}	
 	 	 
@@ -601,33 +630,36 @@ public class MainClass  {
 	void searchByName(String name) throws ClassNotFoundException, IOException{
 		
 		List<Data> result = OperationClass.getInstance().searchByName(name);
-		 System.out.println("		 ________________________________________________________________________");	
+		 System.out.println("		 ____________________________________________________________________________________________");	
 		 System.out.print("		");
 		 
-		 System.out.print("||	ID	|");
-		 System.out.print("|	Name	|");
-		 System.out.print("|	Price	|");
-		 System.out.print("|	Quantity	||");
+		 System.out.print("||	ID		|");
+		 System.out.print("|	Name		|");
+		 System.out.print("|	Price	    |");
+		 System.out.print("|	Quantity	    ||");
 		 System.out.println();
-		 System.out.println("		||______________||______________||______________||______________________||");
+		 System.out.println("		||______________________||______________________||__________________||______________________||");
 			
 		 
+		 String pattern = "%-20s || %-20s || %-16s || %-21s||";
+	  
 		
 	  	 
 	 	for(int i = 0 ; i<result.size() ; i++){
-	 		 System.out.println("\t\t|| "+result.get(i).getId() + "\t\t|| " + result.get(i).getName() + "\t\t|| " + result.get(i).getUnitPrice() + "\t\t|| " + result.get(i).getStockQuantity() +"\t\t\t||" ); 
-	 		 System.out.println("		||______________||______________||______________||______________________||");
-	 			 	
+	 		 System.out.format(pattern,"\t\t||\t" + result.get(i).getId(),result.get(i).getName() , result.get(i).getUnitPrice() , result.get(i).getStockQuantity());
+	 		 System.out.println();
+	 		 System.out.println("		||______________________||______________________||__________________||______________________||");
+			 	
 		}
 		 	 System.out.println("\t\t\t\t\tTotal Record Found: "+ result.size() +"\t");
 		 	 System.out.println("		||______________________________________________________________________||");
 	 	
 		 
 	 	
-	 	 System.out.println(" _____________________________________________________________________________________");
-	 	 System.out.println("| *)Display | W)rite | R)ead | U)pdate | D)elete | F)irst | P)revious | N)ext | L)ast |");
-		 System.out.println("|           S)earch | G)o to | Se)t row | B)ack up | Re)store | H)elp | E)xit         |");
-		 System.out.println("|_____________________________________________________________________________________|");
+	 	 System.out.println("\t\t     _____________________________________________________________________________________");
+	 	 System.out.println("\t\t    | *)Display | W)rite | R)ead | U)pdate | D)elete | F)irst | P)revious | N)ext | L)ast |");
+		 System.out.println("\t\t    |           S)earch | G)o to | Se)t row | B)ack up | Re)store | H)elp | E)xit         |");
+		 System.out.println("\t\t    |_____________________________________________________________________________________|");
 	}
 	
 	
@@ -641,10 +673,10 @@ public class MainClass  {
 			OperationClass.numberOfRowPerPage = row;
 		}
 		
-		if( OperationClass.totalRecord % row == 0){
-			OperationClass.totalPage = (int) OperationClass.totalRecord / row;		
+		if( OperationClass.getInstance().getRecordHistory().getCurrentRecord() % row == 0){
+			OperationClass.totalPage = (int) OperationClass.getInstance().getRecordHistory().getCurrentRecord() / row;		
 		}else{
-			OperationClass.totalPage = (int) OperationClass.totalRecord / row;				
+			OperationClass.totalPage = (int) OperationClass.getInstance().getRecordHistory().getCurrentRecord() / row;				
 			OperationClass.totalPage++;
 		}		
 		
@@ -744,10 +776,11 @@ public class MainClass  {
 	}
 	
 	void goToFirstPage() throws ClassNotFoundException, IOException{
-		goTo("1");
+		//goTo("1");
+		readData();
 	}
 	void goToLastPage() throws ClassNotFoundException, IOException{
-		goTo(OperationClass.totalPage+"");
+		goTo(OperationClass.totalPage+"");String pattern = "%-20s || %-20s || %-16s || %-21s||";
 	}
 	void goToNextPage() throws ClassNotFoundException, IOException{
 		if(OperationClass.currentPage == OperationClass.totalPage){
