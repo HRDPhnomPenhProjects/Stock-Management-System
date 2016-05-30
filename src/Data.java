@@ -43,7 +43,7 @@ public class Data implements Serializable{
 		return stockQuantity;
 	}
 	public void setStockQuantity(int stockQuantity) {
-		stockQuantity = stockQuantity;
+		this.stockQuantity = stockQuantity;
 	}
 	public String getImportedDate() {
 		return importedDate;
