@@ -70,13 +70,15 @@ public class MainClass  {
 	  
 	  	// input = new Scanner(System.in);
 	  	 
-		try {
-			OperationClass.totalRecord =  OperationClass.getInstance().getRecordHistory().getCurrentRecord();
+	  	OperationClass.totalRecord =  1000000000l;
+		
+	  /*	 try {
+			OperationClass.totalRecord = OperationClass.getInstance().getRecordHistory().getCurrentRecord();
 		} catch (ClassNotFoundException | IOException e) {
 			System.out.println("You don't have record yet,Please input manually");
 		} catch (Exception e) {
 			System.out.println("You don't have record yet,Please input manually");
-		}
+		} */
 		
 		if(OperationClass.totalRecord%OperationClass.numberOfRowPerPage==0){
 			OperationClass.totalPage = (int)OperationClass.totalRecord / OperationClass.numberOfRowPerPage;	
@@ -105,7 +107,12 @@ public class MainClass  {
 			System.out.println("You don't have record yet,Please input manually");
 		}
 	  	
-	  //	mainClass.initializeData(); 
+	 	try {
+			mainClass.initializeData();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
 	 	try {
 			mainClass.readData();
 		} catch (ClassNotFoundException | IOException e) {
