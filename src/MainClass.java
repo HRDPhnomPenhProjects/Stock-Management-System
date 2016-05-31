@@ -82,7 +82,7 @@ public class MainClass  {
 		
 	  	// input = new Scanner(System.in);
 	  	 
-    //   OperationClass.totalRecord =  10000000l;
+       OperationClass.totalRecord =  10000000l;
 		
 	   	  try {
 			OperationClass.totalRecord = OperationClass.getInstance().getRecordHistory().getCurrentRecord();
@@ -120,14 +120,14 @@ public class MainClass  {
 			System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 		}
 	  	
-/*  try {
+  try {
 			mainClass.initializeData();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}    
 	 	
-	 	*/
+	  
 	  	
 	  	
 	 	try {

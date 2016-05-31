@@ -337,6 +337,7 @@ public class OperationClass extends Thread {
 		
 		void restoreAllData() throws ClassNotFoundException, IOException{
 			File cleanerFile = new File(FileNameClass.STOCK_RECORD_DIRECTORY_PATH);
+			long size = 0;
 			
 			for (File file: cleanerFile.listFiles()) {
 			          file.delete();
@@ -349,14 +350,14 @@ public class OperationClass extends Thread {
 			System.out.println("Please wait while restore data...");
 			
 			for(int i=1;i<=fBackup.listFiles().length;i++){
-		
-			 
-				 writeAllData(readAllData(FileNameClass.BACK_UP_DIRECTORY_PATH + "_" + i),FileNameClass.RECORD_HISTORY_PATH +"_" +i);
-				
+				List<Data> data = 	readAllData(FileNameClass.BACK_UP_PATH + "_" + i);
+				size += data.size();
+				 writeAllData(data,FileNameClass.STOCK_RECORD_PATH +"_" +i);
+				 
 			}
 			System.out.println();
 			System.out.println("-----RESTORE Sucessfully-----");
-			
+			updateRecordHistory(getRecordHistory().getTotalRecord(),size);
 			
 		}
 		
