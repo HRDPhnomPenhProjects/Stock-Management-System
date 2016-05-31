@@ -3,8 +3,10 @@ import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -19,14 +21,14 @@ public class OperationClass extends Thread {
 	public static int current_id = 1;
 	
 	
-	public static final int MAXIMUM_RECORD_PER_FILE = 20000;
+	public static final int MAXIMUM_RECORD_PER_FILE = 50000;
 	
 	public static int currentPage = 1;
 	public static int totalPage = 0;
 	public static long totalRecord = 10000;
 	public static int numberOfRowPerPage = 5;
 	public static int numberOfFile = 0;
-	
+	static long readFile = 1;
 	
 	
 	
@@ -74,7 +76,13 @@ public class OperationClass extends Thread {
 			objectOutputStream.close();			
 	 }
 	 
-	 
+	 void writeAllData(List<Data> lst,String filePath) throws IOException{
+			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(filePath)); 
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(bufferedOutputStream);
+			
+			objectOutputStream.writeObject(lst);
+			objectOutputStream.close();			
+	 }
 	 
 	 void writeAllData(long numberOfRecords) throws IOException{
 			List<Data> lst = new ArrayList<>();
@@ -139,9 +147,11 @@ public class OperationClass extends Thread {
 		}
 
 	   List<Data> readData(String id) throws ClassNotFoundException, IOException{
-			
-		    long recordId = InputConverter.toLong(id); 
-			long readFile = 1;
+	 
+		  
+			long recordId = Long.parseLong(id); 		 
+	
+		   
 			List<Data> result;
 			
 			if(recordId % OperationClass.MAXIMUM_RECORD_PER_FILE !=0){
@@ -162,18 +172,49 @@ public class OperationClass extends Thread {
 	   }
 	   
 	   
+	  
+	   
 	   List<Data> searchByName(String name) throws ClassNotFoundException, IOException{
 		   List<Data> result = new Vector<>();
 		   File file = new File(FileNameClass.STOCK_RECORD_DIRECTORY_PATH);
 		   
-		   for(int i=1;i<file.listFiles().length+1;i++){
+		   boolean isNum = false;
+			int validate;
+			
+			try {
+				
+				validate = Integer.parseInt(name);
+				isNum = true;
+			} catch (Exception e) {
+				// TODO: handle exception
+				
+			}
+
+			finally{
+				if(isNum){
+					System.out.println("Name can't be number");
+					return null;
+				}
+			} 
+		   
+			
+			// search all file
+		  /* for(int i=1;i<=file.listFiles().length;i++){
 			   List<Data> tmp = readAllData(FileNameClass.STOCK_RECORD_PATH +"_"+i);
 			     for(int j=0;j<tmp.size();j++){
 			      if(tmp.get(j).getName().toLowerCase().contains(name.toLowerCase())){
 			     	 	result.add(tmp.get(j));
 			    	 }
 			     }
-		   }
+		   }*/
+		   
+				// search last file
+			   List<Data> tmp = readAllData(FileNameClass.STOCK_RECORD_PATH +"_"+ file.listFiles().length);
+			     for(int j=0;j<tmp.size();j++){
+			      if(tmp.get(j).getName().toLowerCase().contains(name.toLowerCase())){
+			     	 	result.add(tmp.get(j));
+			    	 }
+			     }
 		   
 	 	   return result;
 	   }
@@ -212,18 +253,208 @@ public class OperationClass extends Thread {
 		   List<Data> result = readData(id);
 		   
 		   for(int i=0; i<result.size() ;i++){
-			   if(result.get(i).getId().equals(id)){
+			   if(result.get(i).getId().equals(id) || result.get(i).getId() == id){
 				   return result.get(i);
 			   }
 		   }
 		   return null;
 	   }
 	   
-	 
+		boolean updateAll(String id,String name,String price,String qty) throws ClassNotFoundException, IOException{
+ 			boolean isNum = false;
+ 			int validate = 1;
+ 			
+ 			try {
+ 				
+ 				validate = Integer.parseInt(name);
+				isNum = true;
+			} catch (Exception e) {
+				// TODO: handle exception
+				
+			}
+
+ 			finally{
+ 				if(isNum){
+ 					System.out.println("Name can't be number");
+ 					return false;
+ 				}
+ 			} 
+ 			
+ 			List<Data> lst = readData(id);
+ 			
+ 			for(int i=0;i<lst.size();i++){
+ 				if(lst.get(i).getId().equals(id)){
+ 					lst.get(i).setName(name);
+ 					lst.get(i).setUnitPrice(Float.parseFloat(price));
+ 					lst.get(i).setUnitPrice(Integer.parseInt(qty));
+ 					writeAllData(lst);
+ 					return true;
+ 				}
+ 				
+ 				
+ 			}
+ 			
+ 			return false;
+ 		}
+ 		
  
 	 		
-	 		
+		boolean updateAll(String id,String name) throws ClassNotFoundException, IOException{
+ 			boolean isNum = false;
+ 			int validate = 1;
+ 			
+ 			try {
+ 				
+ 				validate = Integer.parseInt(name);
+				isNum = true;
+			} catch (Exception e) {
+				// TODO: handle exception
+				
+			}
+
+ 			finally{
+ 				if(isNum){
+ 					System.out.println("Name can't be number");
+ 					return false;
+ 				}
+ 			} 
+ 			
+ 			List<Data> lst = readData(id);
+ 			
+ 			for(int i=0;i<lst.size();i++){
+ 				if(lst.get(i).getId().equals(id)){
+ 					lst.get(i).setName(name);
+ 					writeAllData(lst);
+ 					return true;
+ 				}
+ 				
+ 				
+ 			}
+ 			
+ 			return false;
+ 		}
+		
+		
+		void restoreAllData() throws ClassNotFoundException, IOException{
+			File cleanerFile = new File(FileNameClass.STOCK_RECORD_DIRECTORY_PATH);
+			
+			for (File file: cleanerFile.listFiles()) {
+			          file.delete();
+			}
+			
+			File fBackup = new File(FileNameClass.BACK_UP_DIRECTORY_PATH);
+			File fData ; 
+			
+			System.out.println();
+			System.out.println("Please wait while restore data...");
+			
+			for(int i=1;i<=fBackup.listFiles().length;i++){
+		
+			 
+				 writeAllData(readAllData(FileNameClass.BACK_UP_DIRECTORY_PATH + "_" + i),FileNameClass.RECORD_HISTORY_PATH +"_" +i);
+				
+			}
+			System.out.println();
+			System.out.println("-----RESTORE Sucessfully-----");
+			
+			
+		}
+		
+		
+		void backupAllData() throws ClassNotFoundException, IOException{
+			
+			
+			File cleanerFile = new File(FileNameClass.BACK_UP_DIRECTORY_PATH);
+			
+			for (File file: cleanerFile.listFiles()) {
+			          file.delete();
+			}
+			
+			File fStock = new File(FileNameClass.STOCK_RECORD_DIRECTORY_PATH);
+			File fData ; 
+			
+			System.out.println();
+			System.out.println("Please wait while backup data...");
+			
+			for(int i=1;i<=fStock.listFiles().length;i++){
+				 
+				fData = new File(FileNameClass.BACK_UP_PATH +"_" +i);
+				fData.createNewFile();
+				 writeAllData(readAllData(FileNameClass.STOCK_RECORD_PATH + "_" + i),FileNameClass.BACK_UP_PATH +"_" +i);
+				
+			}
+			System.out.println();
+			System.out.println("-----BACKUP Sucessfully-----");
+				
+			
+		}
+		
+		
+		
+		
+		
+		
+		boolean updateAll(String id,String name,String price) throws ClassNotFoundException, IOException{
+ 			boolean isNum = false;
+ 			int validate = 1;
+ 			
+ 			try {
+ 				
+ 				validate = Integer.parseInt(name);
+				isNum = true;
+			} catch (Exception e) {
+				// TODO: handle exception
+				
+			}
+
+ 			finally{
+ 				if(isNum){
+ 					System.out.println("Name can't be number");
+ 					return false;
+ 				}
+ 			} 
+ 			
+ 			List<Data> lst = readData(id);
+ 			
+ 			for(int i=0;i<lst.size();i++){
+ 				if(lst.get(i).getId().equals(id)){
+ 					lst.get(i).setName(name);
+ 					lst.get(i).setUnitPrice(Float.parseFloat(price));
+ 					writeAllData(lst);
+ 					return true;
+ 				}
+ 				
+ 				
+ 			}
+ 			
+ 			return false;
+ 		}
+ 		
+	 
+ 		
+ 
+ 
 	 		boolean updateName(String id,String name) throws ClassNotFoundException, IOException{
+	 			boolean isNum = false;
+	 			int validate;
+	 			
+	 			try {
+	 				
+	 				validate = Integer.parseInt(name);
+					isNum = true;
+				} catch (Exception e) {
+					// TODO: handle exception
+					
+				}
+
+	 			finally{
+	 				if(isNum){
+	 					System.out.println("Name can't be number");
+	 					return false;
+	 				}
+	 			} 
+	 			
+	 			 
 	 			
 	 			List<Data> lst = readData(id);
 	 			
@@ -280,10 +511,19 @@ public class OperationClass extends Thread {
 	 			totalRecord--;
 	 			updateRecordHistory(getRecordHistory().getTotalRecord(), getRecordHistory().getCurrentRecord()-1);
 	 			List<Data> lst = readData(id);
+			
+	 		 
 	 			for(int i=0;i<lst.size();i++){
 	 				
 	 				if(lst.get(i).getId().equals(id)){
 	 					lst.remove(i);
+	 					if(lst.size()==0){
+	 						
+	 						File f = new File(FileNameClass.STOCK_RECORD_PATH+"_" + readFile);
+	 					 
+	 						
+	 						return true;
+	 					}
 	 					writeAllData(lst);
 	 					return true;
 	 				}
@@ -294,6 +534,12 @@ public class OperationClass extends Thread {
 	 			return false; 
 	 		
 	 		}
+	 		
+	 		
+	 		
+	 		
+	 		
+	 		
 	 		
 	 		void updateRecordHistory(long totalRecord,long currentRecord) throws IOException{
 	 			File file = new File(FileNameClass.RECORD_HISTORY_PATH);

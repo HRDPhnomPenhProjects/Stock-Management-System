@@ -8,6 +8,8 @@ public class MyConsoleListener {
 	
 	public static final int BACK_SPACE = 8;
 	public static final int SHIFT = 16;
+	public static final int EXIT = 27;
+	
 	
 	
  	public static int ascii;
@@ -23,8 +25,8 @@ public class MyConsoleListener {
                 public void keyPressed(KeyEvent e) {  
               
                 	keyboardCode = e.getKeyCode();
-                	if((keyboardCode < 37 && keyboardCode != SHIFT && keyboardCode != BACK_SPACE) || keyboardCode > 40 ){
-                   //   	System.out.println("KEYBOARD: " + e.getKeyCode());
+                	if((keyboardCode < 37 && keyboardCode != SHIFT && keyboardCode != BACK_SPACE && keyboardCode != EXIT ) || keyboardCode > 40 ){
+                 //   	System.out.println("KEYBOARD: " + e.getKeyCode());
                 		ascii = e.getKeyChar();
                 		option += e.getKeyChar();
                 		System.out.print((char)ascii);

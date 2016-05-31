@@ -22,7 +22,15 @@ public class MainClass  {
 	
 	public static final String DISPLAY = "*";
 	public static final String WRITE = "W";
+	
 	public static final String READ = "R";
+	public static final String READ_SHORT = "R#";
+	public static final String DELETE_SHORT = "D#";
+	public static final String WRITE_SHORT = "W#";
+	public static final String UPDATE_SHORT = "U#";
+	
+	
+	
 	public static final String UPDATE = "U";
 	public static final String DELETE = "D";
 	public static final String FIRST = "F";
@@ -51,6 +59,8 @@ public class MainClass  {
 	public static final int NEXT_ARROW = 39;
 	public static final int DOWN_ARROW = 40;
 	public static final int ENTER = 10;
+	public static final int EXIT_SHORT = 27;
+	
 	public static final int BACK_SPACE = 8;
 	public static final int SHIFT = 16;
 	
@@ -67,19 +77,21 @@ public class MainClass  {
 		double old = new Date().getTime();
 	
 	  	MainClass mainClass = new MainClass();
-	  
+		String short_cut[];
+		
+		
 	  	// input = new Scanner(System.in);
 	  	 
-       //OperationClass.totalRecord =  10000000l;
+    //   OperationClass.totalRecord =  10000000l;
 		
-	  	 try {
+	   	  try {
 			OperationClass.totalRecord = OperationClass.getInstance().getRecordHistory().getCurrentRecord();
 		} catch (ClassNotFoundException | IOException e) {
 			System.out.println("You don't have record yet,Please input manually");
 		} catch (Exception e) {
 			System.out.println("You don't have record yet,Please input manually");
 		}     
-	 
+	   
 	   	 
 	   	 if(OperationClass.totalRecord%OperationClass.numberOfRowPerPage==0){
 			OperationClass.totalPage = (int)OperationClass.totalRecord / OperationClass.numberOfRowPerPage;	
@@ -107,16 +119,17 @@ public class MainClass  {
 		} catch (Exception e) {
 			System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 		}
-	/*  	
-	 try {
+	  	
+/*  try {
 			mainClass.initializeData();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}   */
-  
+		}    
 	 	
-	 	
+	 	*/
+	  	
+	  	
 	 	try {
 			mainClass.readData();
 		} catch (ClassNotFoundException | IOException e) {
@@ -157,6 +170,9 @@ public class MainClass  {
 				}else if(MyConsoleListener.keyboardCode == ENTER){
 					choice = MyConsoleListener.option;
 					break;
+				} else if(MyConsoleListener.keyboardCode == EXIT_SHORT){
+					System.exit(0);
+					break;
 				} 
 				
 			 
@@ -173,8 +189,25 @@ public class MainClass  {
 		 	System.out.println(input.nextLine());
 			}	  */
 			  
+			 
+			 short_cut  = choice.split("#");
+			  if(short_cut.length==2){
+				  if(short_cut[0].toUpperCase().equals(READ)){
+					  choice = "R#";  
+				  }else if(short_cut[0].toUpperCase().equals(DELETE)){
+					  choice = "D#";
+				  }else if(short_cut[0].toUpperCase().equals(WRITE)){
+					  choice = "W#";
+				  }else if(short_cut[0].toUpperCase().equals(UPDATE)){
+					  choice = "U#";
+				  }
+				   
+			  }
 			  
 			 input = new Scanner(System.in);
+			 
+			 
+			 
  			switch (choice.toUpperCase().trim()) {
 			case DISPLAY:
 				try {
@@ -197,6 +230,25 @@ public class MainClass  {
 					}
 			 	 
 				break;
+				
+			case WRITE_SHORT:
+				try {
+					String fields[] = short_cut[1].split(";");
+				
+					if(fields.length == 3){
+						mainClass.addData(fields[0].trim(),fields[1].trim(),fields[2].trim());	
+					} 
+					
+					 
+				} catch (ClassNotFoundException | IOException e) {
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
+				} catch (Exception e) {
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
+					}
+			 	 
+				break;
+				
+				
 			case READ:
 				 
 				System.out.println("---READ---");
@@ -211,7 +263,23 @@ public class MainClass  {
 					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
 				}
 			 	break;
+			 	
+			case READ_SHORT:			
 
+				System.out.println("---READ---");
+
+				try {
+					 
+					mainClass.readData(short_cut[1].trim());
+						
+				} catch (ClassNotFoundException | IOException e) {
+				 	System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
+				 	
+				} catch (Exception e) {
+			 	System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");		
+				}
+			 	break;
+			 
 			case UPDATE:
 				 
 				System.out.println("---UPDATE---");
@@ -225,6 +293,66 @@ public class MainClass  {
 				}
 				
 				break;
+
+			
+			case UPDATE_SHORT:
+				 
+				String fields[] = short_cut[1].split(";");
+				
+				
+				try {
+				 	 
+					 if(fields.length == 2){
+						System.out.println();
+						if(OperationClass.getInstance().updateAll(fields[0].trim(),fields[1].trim())){
+							System.out.println("Update succesfully...");
+						}else{
+							System.out.println("Error while Updating...");			
+						}
+					 
+					}
+					if(fields.length == 3){
+						System.out.println();
+						if(OperationClass.getInstance().updateAll(fields[0].trim(),fields[1].trim(),fields[2].trim())){
+							System.out.println("Update succesfully...");
+						}else{
+							System.out.println("Error while Updating...");			
+						}
+					 
+					}
+					if(fields.length == 4){
+						System.out.println();
+						if(OperationClass.getInstance().updateAll(fields[0].trim(),fields[1].trim(),fields[2].trim(),fields[3].trim())){
+							System.out.println("Update succesfully...");
+						}else{
+							System.out.println("Error while Updating...");			
+						}
+					 
+					} 
+					
+				} catch (ClassNotFoundException | IOException e) {
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
+				} catch (Exception e) {
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
+				}
+				
+				break;
+				
+			case DELETE_SHORT:			
+
+				System.out.println("---READ---");
+
+				try {
+					 
+					mainClass.delete(short_cut[1].trim());
+						
+				} catch (ClassNotFoundException | IOException e) {
+				 	System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
+				 	
+				} catch (Exception e) {
+			 	System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");		
+				}
+			 	break;
 
 			case DELETE:
 				 
@@ -314,7 +442,7 @@ public class MainClass  {
 
 			case SET_ROW:
 			 
-				System.out.println("---SET ROWS---");
+				System.out.println("---SET ROWS (MAX = 1000 rows)---");
 				System.out.print("Input rows num: ");
 				try {
 					mainClass.setRow(input.nextLine());
@@ -325,13 +453,36 @@ public class MainClass  {
 				}
 				break;
 			case BACK_UP:
-				
+				try {
+					OperationClass.getInstance().backupAllData();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
+				}catch (Exception e) {
+					// TODO Auto-generated catch block
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
+				}				
 				break;
 			case RESTORE:
-				
+				try {
+					OperationClass.getInstance().restoreAllData(); 
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
+				}catch (Exception e) {
+					// TODO Auto-generated catch block
+					System.out.println("Error 404 ! Contact PHNOM PENH Group 3 For more infomation");
+				}				
 				break;
+			 
 			case HELP:
-				
+				mainClass.help();
 				break;
 			case EXIT:
 				System.exit(0);
@@ -345,6 +496,83 @@ public class MainClass  {
 			
 	}
 	
+private void addData(String name, String price, String qty) throws ClassNotFoundException, IOException {
+		 
+	File f = new File(FileNameClass.STOCK_RECORD_DIRECTORY_PATH);
+	 
+ 	List<Data> result =(List<Data>)new OperationClass(FileNameClass.STOCK_RECORD_PATH + "_" +f.listFiles().length).readAllData();
+ 	
+ 	List<Data> newData = new ArrayList<>(); 
+ 	
+ 	if(result.size() == OperationClass.MAXIMUM_RECORD_PER_FILE){
+ 		String id = OperationClass.getInstance().getRecordHistory().getCurrentRecord()+1 + "";
+ 		 
+ 	 
+ 		boolean isNum = false;
+			int validate;
+			
+			try {
+				
+				validate = Integer.parseInt(name);
+			isNum = true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			
+		}
+
+			finally{
+				if(isNum){
+					System.out.println("Name can't be number");
+					return ;
+				}
+			} 
+ 	 
+ 		float unitPrice = Float.parseFloat(price);
+ 		 
+ 	 
+ 		int quantity = Integer.parseInt(qty);
+ 		System.out.println();	
+ 		 
+ 		
+ 		newData.add(new Data(id, name, (float)unitPrice, (int)quantity, Today.today));
+		new OperationClass(FileNameClass.STOCK_RECORD_PATH + "_" + (f.listFiles().length+1)).addData(newData);
+	 	setRow(OperationClass.numberOfRowPerPage+"");
+ 		
+ 	}else{
+ 		String id = OperationClass.getInstance().getRecordHistory().getCurrentRecord()+1 + "";
+ 	 
+ 		boolean isNum = false;
+			int validate;
+			
+			try {
+				
+				validate = Integer.parseInt(name);
+			isNum = true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			
+		}
+
+			finally{
+				if(isNum){
+					System.out.println("Name can't be number");
+					return ;
+				}
+			}  
+ 		
+ 		
+ 		float unitPrice = Float.parseFloat(price);
+ 		int quantity = Integer.parseInt(qty);
+ 		System.out.println();	
+ 		 
+ 		
+ 		newData.add(new Data(id, name, (float)unitPrice, (int)quantity, Today.today));
+		new OperationClass(FileNameClass.STOCK_RECORD_PATH + "_" + f.listFiles().length).addData(newData);
+		setRow(OperationClass.numberOfRowPerPage+"");
+			
+ 	}	
+	}
+
 /*	void copyDatas() throws IOException, InterruptedException, ClassNotFoundException{
 	  	new OperationClass(FileNameClass.STOCK_RECORD_PATH).createFiles() ;
 	 	 	
@@ -359,6 +587,37 @@ public class MainClass  {
   
 	}*/
 	
+	private void help() {
+		// TODO Auto-generated method stub
+ 
+		System.out.println("--------------------------------------------------------------------------------------------------------");
+		System.out.println("=======================================================================================================");
+		System.out.println(" 			1. Move Page																				");
+		System.out.println(" 			   - NEXT ARROW move to NEXT PAGE															");
+		System.out.println(" 			   - BACK ARROW move to NEXT PAGE														   ");
+		System.out.println("  			   - UP ARROW move to NEXT PAGE															   ");
+		System.out.println(" 			   - DOWN KEY move to NEXT PAGE															   ");
+		System.out.println(" 			    				  																	   ");
+		System.out.println(" 			2. Read Data																			   ");
+		System.out.println(" 			   - [r|R] + # + ID which you want to read 												   ");
+		System.out.println(" 			    				  																	   ");
+		System.out.println(" 			3. DELETE Data																			   ");
+		System.out.println(" 			   - [d|D] + # + ID which you want to delete 												");
+		System.out.println(" 			4. WRITE Data																			   ");
+		System.out.println(" 			   - [w|W] + # + ID which you want to write and + ; to splite the data 					   ");		
+		System.out.println(" 			5. update Data																			   ");
+		System.out.println(" 			   - [u|U] + # + ID which you want to write and + ; to splite the data 					   ");	
+		System.out.println(" 			6. EXIT progam																			   ");
+		System.out.println(" 			   - Press ESC 																			   ");	
+		System.out.println(" 			    				  																	   ");
+		System.out.println("========================================================================================================");
+		System.out.println("--------------------------------------------------------------------------------------------------------");
+		
+	
+	
+			
+	}
+
 	void initializeData() throws IOException{
 	  	new OperationClass(FileNameClass.STOCK_RECORD_PATH).createFiles() ;
 	 	 	
@@ -392,9 +651,13 @@ public class MainClass  {
 	
 	
 	boolean readData(String id) throws ClassNotFoundException, IOException{
+			
+	 
 		
 		  Data result = OperationClass.getInstance().searchData(id);
+		  
 	 
+		  
 	  	 	  if(result != null){
 	 			 System.out.println();
 	 		 	 System.out.println("Product ID    : " + result.getId());
@@ -526,15 +789,33 @@ public class MainClass  {
 		
 	}
 	
+	
+ 
 	void update(String id) throws ClassNotFoundException, IOException{
 	 
 		if(readData(id)) {
 			System.out.println("What do you want to update?");
 			System.out.println("(A)ALL (N)Name (P)Price (Q)Quantity");
-			System.out.println("Option: ");
+			System.out.print("Option: ");
 			String choice = input.nextLine();
 			switch (choice.toUpperCase()) {
 			case ALL:
+				
+				System.out.print("Name: ");
+				String name = input.nextLine();
+				
+				System.out.print("Price: ");
+				String price = input.nextLine();
+				
+				System.out.print("Quantity: ");
+				String qty = input.nextLine();
+				
+				if(OperationClass.getInstance().updateAll(id, name, price, qty)){
+					System.out.println("Update succesfully...");
+				}else{
+					System.out.println("Error while Updating...");			
+				}
+				
 				
 				break;
 
@@ -581,6 +862,8 @@ public class MainClass  {
 	 	 
 	 	List<Data> result =(List<Data>)new OperationClass(FileNameClass.STOCK_RECORD_PATH + "_" +f.listFiles().length).readAllData();
 	 	
+	 	List<Data> newData = new ArrayList<>(); 
+	 	
 	 	if(result.size() == OperationClass.MAXIMUM_RECORD_PER_FILE){
 	 		String id = OperationClass.getInstance().getRecordHistory().getCurrentRecord()+1 + "";
 	 		System.out.print("Product ID   : " + id);
@@ -588,7 +871,24 @@ public class MainClass  {
 	 		
 	 		System.out.print("Product Name : ");
 	 		String name = input.nextLine();
-	 		 
+	 		boolean isNum = false;
+ 			int validate;
+ 			
+ 			try {
+ 				
+ 				validate = Integer.parseInt(name);
+				isNum = true;
+			} catch (Exception e) {
+				// TODO: handle exception
+				
+			}
+
+ 			finally{
+ 				if(isNum){
+ 					System.out.println("Name can't be number");
+ 					return ;
+ 				}
+ 			} 
 	 		System.out.print("Unit Price   : ");
 	 		float unitPrice = Float.parseFloat(input.nextLine());
 	 		 
@@ -597,9 +897,9 @@ public class MainClass  {
 	 		System.out.println();	
 	 		 
 	 		
-	 		result.add(new Data(id, name, (float)unitPrice, (int)quantity, Today.today));
-			new OperationClass(FileNameClass.STOCK_RECORD_PATH + "_" + (f.listFiles().length+1)).addData(result);
-		//	setRow(OperationClass.numberOfRowPerPage+"");
+	 		newData.add(new Data(id, name, (float)unitPrice, (int)quantity, Today.today));
+			new OperationClass(FileNameClass.STOCK_RECORD_PATH + "_" + (f.listFiles().length+1)).addData(newData);
+		 	setRow(OperationClass.numberOfRowPerPage+"");
 	 		
 	 	}else{
 	 		String id = OperationClass.getInstance().getRecordHistory().getCurrentRecord()+1 + "";
@@ -608,7 +908,26 @@ public class MainClass  {
 	 		
 	 		System.out.print("Product Name : ");
 	 		String name = input.nextLine();
-	 		 
+	 		boolean isNum = false;
+ 			int validate;
+ 			
+ 			try {
+ 				
+ 				validate = Integer.parseInt(name);
+				isNum = true;
+			} catch (Exception e) {
+				// TODO: handle exception
+				
+			}
+
+ 			finally{
+ 				if(isNum){
+ 					System.out.println("Name can't be number");
+ 					return ;
+ 				}
+ 			}  
+	 		
+	 		
 	 		System.out.print("Unit Price   : ");
 	 		float unitPrice = Float.parseFloat(input.nextLine());
 	 		 
@@ -617,8 +936,8 @@ public class MainClass  {
 	 		System.out.println();	
 	 		 
 	 		
-	 		result.add(new Data(id, name, (float)unitPrice, (int)quantity, Today.today));
-			new OperationClass(FileNameClass.STOCK_RECORD_PATH + "_" + f.listFiles().length).addData(result);
+	 		newData.add(new Data(id, name, (float)unitPrice, (int)quantity, Today.today));
+			new OperationClass(FileNameClass.STOCK_RECORD_PATH + "_" + f.listFiles().length).addData(newData);
 			setRow(OperationClass.numberOfRowPerPage+"");
 				
 	 	}	
@@ -663,11 +982,19 @@ public class MainClass  {
 	}
 	
 	
-	void setRow(String rows) throws ClassNotFoundException, IOException{
+ 	void setRow(String rows) throws ClassNotFoundException, IOException{
 		int row = Integer.parseInt(rows);
+		
+		
+		if(row <=0){
+			System.out.println("--- Allow Only postive number 1 -> 1000");
+			return;
+		}
+		
+		
 		OperationClass.currentPage = 1;
 		if(row>10000){
-			OperationClass.numberOfRowPerPage = 10000;
+			OperationClass.numberOfRowPerPage = 1000;
 			 
 		}else{
 			OperationClass.numberOfRowPerPage = row;
@@ -681,8 +1008,10 @@ public class MainClass  {
 		}		
 		
 		 readData();
-	}
+	} 
 	
+	
+  
 
 	void goTo(String pages) throws ClassNotFoundException, IOException{
 		int page = Integer.parseInt(pages);
